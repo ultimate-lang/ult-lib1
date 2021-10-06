@@ -99,17 +99,16 @@ public class Main {
 	    }
 	}
 
-	public static void main(String[] args) throws Exception {
-		String path = "./build/libs/ult-lib1-1.0.0.jar";
-		File jar = new File(path);
-		List<String> classes = getClassNamesFromJarFile(jar);
+	public static void investigate(File jarFile) throws Exception
+	{
+		List<String> classes = getClassNamesFromJarFile(jarFile);
 		System.err.println(classes.size());
 		System.err.println(classes);
 		for(int i=0; i<classes.size(); i++)
 		{
 			String className = classes.get(i);
 			System.err.println(className);
-			byte[] classBytes = getClassBytesFromJarFile(jar, className);
+			byte[] classBytes = getClassBytesFromJarFile(jarFile, className);
 			System.err.println(classBytes.length);
 			Loader loader = new JDLoader(className, classBytes);
 			Printer printer = new Printer() {
@@ -203,5 +202,12 @@ public class Main {
 				}
 			}
 		}
+
+	}
+
+	public static void main(String[] args) throws Exception {
+		String path = "./build/libs/ult-lib1-1.0.0.jar";
+		File jar = new File(path);
+		investigate(jar);
 	}
 }
